@@ -1,0 +1,20 @@
+//Sarife Banegas Parada
+
+#include "stdafx.h"
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+
+void main()
+{float a, b, h;
+
+	cout<<"--Area del rectangulo--"<<endl; 
+	cout<<"Ingrese la base: "; cin>>b;
+	cout<<"Ingrese la altura: "; cin>>h;
+	a=b*h;
+	cout<<"El area del rectangulo es: "<<a<<endl; 
+	getch();
+
+}
+
