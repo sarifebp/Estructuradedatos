@@ -1,0 +1,6 @@
+a=str(input("Infrese una letra: "))
+b=str(input("Infrese otra letra: "))
+if(a==b):
+    prinf("Las letras son iguales")
+elif(a!=b):
+    prinf("Las letras no son iguales")
