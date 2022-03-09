@@ -1,0 +1,9 @@
+lista2=(input("Ingresa una lista e numeros separados por coma: "))
+lista2=lista2.split(",")
+suma=0
+
+for i in lista2:
+    suma=suma+int(i)
+    
+p=suma/len(lista2)
+print(p)    
