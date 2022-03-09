@@ -1,0 +1,7 @@
+lista=[80,70,65,100,40]
+suma=0
+for i in lista:
+    suma=suma+i
+
+p=suma/len(lista)
+print(p)
