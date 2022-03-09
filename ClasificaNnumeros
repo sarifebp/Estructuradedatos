@@ -1,0 +1,6 @@
+m=(int(input("Ingresa el numero de elementos: ")))
+lista=[]
+for i in range(m):
+    lista.append(int(input("Introduce un numero ganador: ")))
+lista.sort()
+print("Los numeros ganadores son: "+ stra(lista))
