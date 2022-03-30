@@ -1,0 +1,24 @@
+# Ejemplo Pila
+Dias=[]
+
+Dias.append("Lunes")
+Dias.append("Martes")
+Dias.append("Miercoles")
+Dias.append("Jueves")
+Dias.append("Viernes")
+Dias.append("Sabado")
+Dias.append("Domingos")
+print(Dias)
+
+x=Dias.pop()
+print(Dias)
+x=Dias.pop()
+print(Dias)
+x=Dias.pop()
+print(Dias)
+x=Dias.pop()
+print(Dias)
+x=Dias.pop()
+print(Dias)
+x=Dias.pop()
+print(Dias)
