@@ -1,0 +1,9 @@
+# Ejemplo Pila
+Pila=[]
+# Incluir elementos
+Pila.append("c")
+Pila.append("a")
+print(Pila)
+# Sacar elementos
+x=Pila.pop()
+print(Pila)
