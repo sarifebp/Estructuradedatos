@@ -1,0 +1,10 @@
+# Ejemplo cola
+Cola=[]
+# Incluir elementos
+Cola.append("c")
+Cola.append("a")
+Cola.append("b")
+print(Cola)
+# Sacar elementos
+x=Cola.pop(0)
+print(Cola)
