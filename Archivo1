@@ -1,0 +1,48 @@
+mport os
+
+print ("===============")
+print ("=====makau=====")
+print ("===============")
+
+NOMBRE_ARCHIVO = 'c:\spb_data\personaSuscribirse.txt'
+
+personaSuscribirse = open(NOMBRE_ARCHIVO, 'w')
+personaSuscribirse.write('Nombre')
+personaSuscribirse.write(' -Apellido')
+personaSuscribirse.write(' -Numero de tarjeta ')
+personaSuscribirse.write(' -Codigo ')
+personaSuscribirse.write(' -Fecha expiracion \n')
+
+personaSuscribirse.write('Sarife')
+personaSuscribirse.write(' Banegas ')
+personaSuscribirse.write(' 56465531321 ')
+personaSuscribirse.write(' 456 ')
+personaSuscribirse.write(' 15-04 \n')
+
+personaSuscribirse.write('Sofia')
+personaSuscribirse.write(' Parada ')
+personaSuscribirse.write(' 74684854546 ')
+personaSuscribirse.write(' 893 ')
+personaSuscribirse.write(' 25-06 \n')
+
+personaSuscribirse.write('Juan')
+personaSuscribirse.write(' Chavez ')
+personaSuscribirse.write(' 94148345487 ')
+personaSuscribirse.write(' 348 ')
+personaSuscribirse.write(' 20-09 \n')
+
+personaSuscribirse.write('Marcelo')
+personaSuscribirse.write(' Poppe ')
+personaSuscribirse.write(' 43758169182 ')
+personaSuscribirse.write(' 327 ')
+personaSuscribirse.write(' 10-05 \n')
+
+personaSuscribirse.write('Nicolas')
+personaSuscribirse.write(' Aguilera ')
+personaSuscribirse.write(' 34861729534 ')
+personaSuscribirse.write(' 907 ')
+personaSuscribirse.write(' 24-07 \n')
+
+personaSuscribirse.close()
+
+#Sarife Banegas
