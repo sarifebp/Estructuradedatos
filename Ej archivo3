@@ -1,0 +1,42 @@
+import random
+Clientes= dict()
+nombres_mujer=["Sofia","Susanita","Carla","Fernanda","Estefany"]
+nombres_hombre=["Esteban","Matias","Carlos","Darwin","Sebastian"]
+apellidos=["Terrazas","Suarez","Rivero","Gonzales","Fernandez"]
+def generar_nombres(sexo):
+    i=random.randint(0,4)
+    if sexo=="mujer":
+        nombre=nombres_mujer[i]
+        if sexo == "hombre":
+            nombre=nombres_hombre[i]
+            noombre+=""
+            j=random.randint(0,4)
+            nombre+=apellidos[j]
+            while nombre in clientes.values():
+                nombre=generar_nombre(sexo)
+                print(nombre+"/n")
+                return nombre
+            
+seguimos = True
+while seguimos== True:
+    print("Que es lo que necesitas?:")
+    print("Generar un nuevo nombre de mujer: 1")
+    print("Generar un nuevo nombre de hombre: 2")
+    print("Mostrar la lista de clientes: 3")
+    print("Terminar el programa:4/n")
+    respuesta= input("seleccion:")
+    if respuesta == "1":
+        tienda=input("A que clientes de la tienda quieres generarle un nombre?:")
+clientes[cliente]= generar_nombre("mujer")
+if respuesta=="2":
+    cliente=input("A que cliente de la tienda quieres generarle un nombre?:")
+    clientes[cliente]= generar_nombre("hombre")
+elif respuesta == "3":
+        print(clientes)
+elif respuesta=="4":
+            archivo = open("nombres.txt","w")
+            clientes=str(clientes)
+            archivo.write(clientes)
+            archivo.close()
+            print("esto es todo por hoy/n")
+            seguimos=False
