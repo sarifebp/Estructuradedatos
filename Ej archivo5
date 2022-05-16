@@ -1,0 +1,25 @@
+def primo(p): 
+    cont=0
+    for i in range(2,p): 
+        if p%i==0:
+            cont=cont+1
+    if cont==0:
+        print("Entra el numero primo: ",p) 
+        return primos.append(p) 
+    else: 
+        print("No es primo.")
+primos=[]
+encendido=True
+while encendido==True:
+    print("La lista contiene: ",primos)
+    print("1 - Ingresar un número.\n0 - Cerrar el programa.")
+    num=input()
+    if num=="1":
+        p=input("Ingrese un número primo: ")
+        a=p.isnumeric()
+        if a==True:
+            primo(int(p))
+        else: 
+            print("No ingresó un número.")
+    if num=="0":
+        encendido=False
