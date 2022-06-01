@@ -1,0 +1,329 @@
+#Proyecto MAKAU
+import pickle
+import os 
+from datetime import timedelta, date
+
+#Clases
+class Archivo:
+    #Guarda cualquier objeto dentro de un archivo
+    def guardar(obj, filename):
+        with open(filename, 'a+b') as f:
+            pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
+            
+    #Actualiza los datos del archivo
+    def actualizar(objs, filename):
+        with open(filename, 'wb') as f:
+            pass
+        for obj in objs:
+            Archivo.guardar(obj, filename)
+            
+    #Carga o lee los objetos que se encuentren dentro de un archivo
+    def cargar(filename):
+        if not(os.path.exists(filename)):
+            file = open(filename,'w')
+        with open(filename, "rb") as f:
+            while True:
+                try:
+                    yield pickle.load(f)
+                except EOFError:
+                    break
+
+class Usuario:
+    def __init__(self):
+        self.username = ''
+        self.password = ''
+        self.email = ''
+        self.telefono = ''
+        self.pais = ''
+        self.direccion = ''
+        self.suscrito = False
+        self.fecha_suscripcion = ''
+    
+    #Verifica la existencia de un Usuario en los archivos
+    def existe(self, username):
+        usuarios = Archivo.cargar('usuarios.pkl')
+        for usuario in usuarios:
+            if usuario.username == username:
+                return True
+        return False
+        
+    #Registra a un Usuario y lo guarda con archivos
+    def registrar(self):
+        os.system('clear')
+        self.publicidad()
+        print('REGISTRO DE USUARIO')
+        self.username = input('Username: ')
+        self.password = input('Password: ')
+        self.email = input('Email: ')
+        self.telefono = input('Telefono: ')
+        self.pais = input('Pais: ')
+        self.direccion = input('Direccion: ')
+        if not self.existe(self.username):
+            Archivo.guardar(self, 'usuarios.pkl')
+            print('Exito: Usuario creado correctamente')
+            input('Presione enter para continuar...')
+        else: 
+            print('Error: Usuario existente')
+            input('Presione enter para continuar...')
+    
+    #Permite iniciar sesion a un usuario
+    def iniciar_sesion(self):
+        os.system('clear')
+        self.publicidad()
+        print('INICIO DE SESION')
+        username = input('Username: ')
+        password = input('Password: ')
+        if not self.existe(username):
+            print('Error: Usuario no existente')
+            input('Presione enter para continuar...')
+            return False
+        else: 
+            usuarios = Archivo.cargar('usuarios.pkl')
+            for usuario in usuarios:
+                if usuario.username == username and usuario.password == password:
+                    self.username = username
+                    self.password = password
+                    self.email = usuario.email
+                    self.telefono = usuario.telefono
+                    self.pais = usuario.pais
+                    self.direccion = usuario.direccion
+                    self.suscrito = usuario.suscrito
+                    self.fecha_suscripcion = usuario.fecha_suscripcion
+                    print('Exito: Inicio de sesion correcto')
+                    input('Presione enter para continuar...')
+                    return True   
+            print('Error: Password incorrecta')
+            input('Presione enter para continuar...')
+            return False
+    
+    #Permite actualizar la informacion de un usuario
+    def actualizar(self):
+        usuarios = Archivo.cargar('usuarios.pkl')
+        usuarios_actualizados = []
+        for usuario in usuarios:
+            if usuario.username == self.username:
+                usuario.username = self.username
+                usuario.password = self.password
+                usuario.email = self.email
+                usuario.telefono = self.telefono
+                usuario.pais = self.pais
+                usuario.direccion = self.direccion
+                usuario.suscrito = self.suscrito
+                usuario.fecha_suscripcion = self.fecha_suscripcion
+            usuarios_actualizados.append(usuario)
+        Archivo.actualizar(usuarios_actualizados, 'usuarios.pkl')
+        
+    #Muestra publicidad si no esta suscrito
+    def publicidad(self):
+        if not self.suscrito:
+            print('### COMPRE UNA SUSCRIPCION PARA ELIMINAR PUBLICIDAD ###')
+    
+    #Permite manejar las suscripciones del usuario
+    def suscribirse(self):
+        os.system('clear')
+        self.publicidad()
+        if not self.suscrito:
+            print('PLANES PARA SUSCRIBIRSE:')
+            print('1. [1 Mes - $5.99]')
+            print('2. [3 Meses - $15.99]')
+            print('3. [12 Mes - $59.99]')
+            print('4. Cancelar')
+            op = input('Seleccione el plan: ')
+            fecha_suscripcion = ""
+            if op == "1":
+                fecha_suscripcion = date.today() + timedelta(days = 30)
+            elif op == "2":
+                fecha_suscripcion = date.today() + timedelta(days = 30*3)
+            elif op == "3":
+                fecha_suscripcion = date.today() + timedelta(days = 30*12)
+            else: 
+                return
+            print('PAGO EN LINEA:')
+            print('Ingrese los datos de su tarjeta')
+            nombre = input('Nombre: ')
+            number = input('Card Number: ')
+            code = input('Code: ')
+            fecha_exp = input('Fecha Exp: ')
+            if nombre != "" and number != "" and code != "" and fecha_exp != "":
+                self.fecha_suscripcion = fecha_suscripcion
+                self.suscrito = True
+                self.actualizar()
+            else:
+                print('Error: Datos invalidos, vuelva a intentar')
+                input('Presione enter para continuar...')
+        else:
+            print('Ya cuenta con una suscripcion hasta la fecha', self.fecha_suscripcion)
+            input('Presione enter para continuar...')
+
+
+class Supermercado:
+    def __init__(self):
+        self.nombre = ''
+        self.direccion = ''
+        self.productos = []
+    
+    #Verifica la existencia de un Supermercado en los archivos
+    def existe(self, nombre):
+        supermercados = Archivo.cargar('supermercados.pkl')
+        for supermercado in supermercados:
+            if supermercado.nombre == nombre:
+                return True
+        return False
+
+    #Registra a un supermercado y lo guarda con archivos
+    def registrar(self):
+        os.system('clear')
+        print('REGISTRO DE SUPERMERCADO')
+        self.nombre = input('Nombre: ')
+        self.direccion = input('Direccion: ')
+        
+        if not self.existe(self.nombre):
+            Archivo.guardar(self, 'supermercados.pkl')
+            print('Exito: Supermercado registrado correctamente')
+            input('Presione enter para continuar...')
+        else: 
+            print('Error: Supermercado existente')
+            input('Presione enter para continuar...')
+    
+    #Permite actualizar la informacion de un supermercado
+    def actualizar(self):
+        supermercados = Archivo.cargar('supermercados.pkl')
+        supermercados_actualizados = []
+        for supermercado in supermercados:
+            if supermercado.nombre == self.nombre:
+                supermercado.nombre = self.nombre
+                supermercado.direccion = self.direccion
+                supermercado.productos = self.productos
+            supermercados_actualizados.append(supermercado)
+        Archivo.actualizar(supermercados_actualizados, 'supermercados.pkl')
+    
+    #Permite buscar a un supermercado por su nombre
+    def buscar_supermercado(self):
+        nombre = input('Ingrese el nombre del supermercado: ')
+        if not self.existe(nombre):
+            print('Error: No existe el supermercado')
+            input('Presione enter para continuar...')
+            return False
+        else:  
+            supermercados = Archivo.cargar('supermercados.pkl')
+            for supermercado in supermercados:
+                if supermercado.nombre == nombre:
+                    self.nombre = supermercado.nombre
+                    self.direccion = supermercado.direccion
+                    self.productos = supermercado.productos
+            return True
+    
+    #Permite registrar productos pertenecientes a un Supermercado
+    def registrar_productos(self):
+        os.system('clear')
+        if self.buscar_supermercado():
+            cant = int(input('Ingresar cantidad de productos: '))
+            for i in range(cant):
+                producto = Producto()
+                producto.registrar()
+                self.productos.append(producto)
+                self.actualizar()
+    
+    #Muestra la lista completa de supermercados      
+    def mostrar_supermercados(self):
+        os.system('clear')
+        supermercados = Archivo.cargar('supermercados.pkl')
+        print('LISTA DE SUPERMERCADOS:')
+        for supermercado in supermercados:
+            print('-', supermercado.nombre, supermercado.direccion)
+        input('Presione enter para continuar...')
+        
+    #Mostrar productos por supermercado
+    def mostrar_productos_supermercado(self):
+        os.system('clear')
+        if self.buscar_supermercado():
+            for producto in self.productos:
+                producto.mostrar_producto()
+        input('Presione enter para continuar...')
+    
+    #Muestra la lista de productos indicando el Supermercado y Direccion
+    def buscar_productos(self):
+        os.system('clear')
+        nombre_producto = input('Nombre del Producto: ')
+        supermercados = Archivo.cargar('supermercados.pkl')
+        for supermercado in supermercados:
+            for producto in supermercado.productos:
+                if producto.nombre == nombre_producto:
+                    print(supermercado.nombre, supermercado.direccion)
+                    producto.mostrar_producto()
+        input('Presione enter para continuar...')
+        
+class Producto:
+    def __init__(self):
+        self.nombre = ''
+        self.tipos = []
+    
+    #Permite registrar un Producto y sus tipos
+    def registrar(self):
+        print('REGISTRO DE PRODUCTO')
+        self.nombre = input('Nombre: ')
+        cant = int(input('Ingresar cantidad de tipos: '))
+        for i in range(cant):
+            self.tipos.append(input('Tipo: '))
+    
+    #Muestra toda la info del producto
+    def mostrar_producto(self): 
+        print('-', self.nombre)
+        for tipo in self.tipos:
+            print('-->', tipo)
+        print()
+      
+        
+#Programa principal
+#Datos
+usuario = Usuario()
+sesion_iniciada = False
+
+#Menu
+op = ""
+while op != "F":
+    os.system('clear')
+    usuario.publicidad()
+    print('OPCIONES USUARIO:')
+    if not sesion_iniciada:
+        print('1. Registrarse')
+        print('2. Iniciar sesion')
+        print('OPCIONES SUPERMERCADO:')
+        print('6. Registrar Supermercado')
+        print('7. Lista de Supermercados')
+        print('8. Registrar productos')
+        print('9. Lista de Productos por Supermercado')
+    else: 
+        print('--> Bienvenido usuario:', usuario.username)
+        print('3. Buscar productos')
+        print('4. Suscripcion')
+        print('5. Cerrar Sesion')
+    print('F. FIN')
+    
+    op = input('Ingrese una opcion: ')
+    if op == '1' and not sesion_iniciada:
+        nuevo_usuario = Usuario()
+        nuevo_usuario.registrar()
+        usuario = Usuario()
+    elif op == '2' and not sesion_iniciada:
+        sesion_iniciada = usuario.iniciar_sesion()
+    elif op == '3' and sesion_iniciada:
+        supermercado = Supermercado()
+        supermercado.buscar_productos()
+    elif op == '4' and sesion_iniciada:
+        usuario.suscribirse()
+    elif op == '5' and sesion_iniciada:
+        usuario = Usuario()
+        sesion_iniciada = False
+    elif op == '6' and not sesion_iniciada:
+        supermercado = Supermercado()
+        supermercado.registrar()
+    elif op == '7' and not sesion_iniciada:
+        supermercado = Supermercado()
+        supermercado.mostrar_supermercados()
+    elif op == '8' and not sesion_iniciada:
+        supermercado = Supermercado()
+        supermercado.registrar_productos()
+    elif op == '9' and not sesion_iniciada:
+        supermercado = Supermercado()
+        supermercado.mostrar_productos_supermercado()
